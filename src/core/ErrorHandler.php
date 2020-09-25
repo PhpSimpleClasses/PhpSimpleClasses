@@ -18,7 +18,7 @@ class ErrorHandler
             E_DEPRECATED => "Deprecated",
             256 => "PHP Simple Classes - Incorrect Function Usage"
         ];
-        if (@($errN == E_NOTICE && IGNORE_NOTICE === TRUE) || ($errN == E_WARNING && IGNORE_WARNIG === TRUE)) {
+        if (@($errN == E_NOTICE && IGNORE_NOTICE === TRUE) || ($errN == E_WARNING && IGNORE_WARNING === TRUE)) {
             return;
         }
 ?>

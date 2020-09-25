@@ -28,5 +28,5 @@ define('DB_NAME', '');
 
 //ERRORS====================
 define('IGNORE_NOTICE', TRUE);
-define('IGNORE_WARNIG', FALSE);
+define('IGNORE_WARNING', FALSE);
 //==========================
