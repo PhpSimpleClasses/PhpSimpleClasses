@@ -1,13 +1,13 @@
 <?php
 
-namespace classes;
+namespace core;
 
 class RouteMng
 {
     public function __construct($uri)
     {
 
-        require_once(BASEPATH . '/routes.php');
+        require_once(BASEPATH . 'routes.php');
         foreach ($routes as $route => $function) {
             $match = [];
             $routeRgx = '/^' . str_replace(['$', '/'], ['([^/]+)', '\/'], $route) . '$/';
@@ -21,7 +21,7 @@ class RouteMng
             $funcX = explode('/', $function);
             $function = $funcX[count($funcX) - 1];
             array_splice($funcX, count($funcX) - 1, 1);
-            $classPath = 'src\\' . implode('\\', $funcX);
+            $classPath = 'Controllers\\' . implode('\\', $funcX);
             $class = new $classPath;
             call_user_func_array([$class, $function], $match);
         } else {

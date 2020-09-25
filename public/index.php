@@ -6,18 +6,23 @@
  * Author: Zimaldo Junior
  * 
  * public/index.php:
- * Declares the class loader and starts the route manager,
- * with the route of the current request.
+ * Declares the class loader and starts the core,
+ * with the uri of the current request.
  */
 
 require_once '../config.php';
 
+
+
+
+//echo $abc123;
+
 spl_autoload_register(function ($class) {
-    $class = str_replace("\\", '/', $class);
-    return require_once(BASEPATH . "/$class.php");
+    $class = str_replace("\\", DS, $class);
+    return include_once(SOURCEPATH . "$class.php");
 });
 
-$xroute = explode(BASEURL, $_SERVER['REQUEST_URI']);
-$xroute[0] = '';
-$route = implode('/', $xroute);
-new classes\RouteMng($route);
+$xuri = explode(BASEURL, $_SERVER['REQUEST_URI']);
+$xuri[0] = '';
+$uri = implode('/', $xuri);
+new core\pscInit($uri);
