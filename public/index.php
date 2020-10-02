@@ -12,11 +12,6 @@
 
 require_once '../config.php';
 
-
-
-
-//echo $abc123;
-
 spl_autoload_register(function ($class) {
     $class = str_replace("\\", DS, $class);
     return include_once(SOURCEPATH . "$class.php");

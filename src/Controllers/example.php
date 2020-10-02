@@ -9,13 +9,15 @@ class example extends PSC
 
     function exampleFunction()
     {
-        echo "Hello!";
-        $this->db->select('tableX', ['name', 'phone', 'address'])
-            ->where('foo !=', 'bar')
+        echo "Hello!<BR>";
+        $this->db->select('tableX', 'x.*, y.foo, y.other')
+            ->join('tableY y', 'y.foo = x.foo', 'left')
+            ->where('foo != 2')
             ->where('foz1', 'baz1')
-            ->where('foz2', 'baz2');
+            ->orWhere('(foz2', 'baz2')
+            ->where('foo != 2 OR bar = 2)');
 
-        echo $this->db->getQuery();
+        echo $this->db->get(false); //Param false (run = false) to return query string
     }
 
     function paramsFunc($paramA, $paramB)
