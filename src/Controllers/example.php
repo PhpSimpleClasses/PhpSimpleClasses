@@ -9,7 +9,6 @@ class example extends PSC
 
     function exampleFunction()
     {
-        echo "Hello!<BR>";
         $this->db->select('tableX', 'x.*, y.foo, y.other')
             ->join('tableY y', 'y.foo = x.foo', 'left')
             ->where('foo != 2')
@@ -17,7 +16,10 @@ class example extends PSC
             ->orWhere('(foz2', 'baz2')
             ->where('foo != 2 OR bar = 2)');
 
-        echo $this->db->get(false); //Param false (run = false) to return query string
+        $data['query'] = $this->db->get(false); //Param false (run = false) to return query string
+        $data['title'] = 'PHP Simple Classes';
+        $data['description'] = 'This is a DB query example using query builder:';
+        $this->load('Views/example', $data);
     }
 
     function paramsFunc($paramA, $paramB)

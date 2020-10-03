@@ -23,4 +23,9 @@ class PSC
     {
         $this->db = new DB;
     }
+    public function load($path, $data = [])
+    {
+        if ($data) extract($data);
+        require(SOURCEPATH . str_replace('/', DS, $path) . '.php');
+    }
 }
