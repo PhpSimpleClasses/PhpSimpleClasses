@@ -2,32 +2,38 @@
 
 namespace Controllers;
 
-use core\PSC;
+use _core\PSC;
 
 class example extends PSC
 {
 
-    function exampleFunction()
+    public function exampleFunction()
     {
-        $this->db->select('tableX', 'x.*, y.foo, y.other')
-            ->join('tableY y', 'y.foo = x.foo', 'left')
-            ->where('foo != 2')
-            ->where('foz1', 'baz1')
-            ->orWhere('(foz2', 'baz2')
-            ->where('foo != 2 OR bar = 2)');
-
-        $data['query'] = $this->db->get(false); //Param false (run = false) to return query string
-        $data['title'] = 'PHP Simple Classes';
+        $exampleModel = new \Models\example;
+        //Set DB in config.php to run this example
+        /* 
+        $data['query'] = $exampleModel->queryBuilderTest();
         $data['description'] = 'This is a DB query example using query builder:';
+        */
+
+        $data['title'] = 'PHP Simple Classes';
         $this->load('Views/example', $data);
     }
 
-    function paramsFunc($paramA, $paramB)
+    public function api()
+    {
+        $this->json([
+            "this" => "is",
+            "a" => "test"
+        ]);
+    }
+
+    public function paramsFunc($paramA, $paramB)
     {
         echo "Your params: $paramA and $paramB";
     }
 
-    function paramsFunc2($paramA, $paramB)
+    public function paramsFunc2($paramA, $paramB)
     {
         echo "Your params to this other function: $paramA and $paramB";
     }

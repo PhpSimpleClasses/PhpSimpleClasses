@@ -1,6 +1,6 @@
 <?php
 
-namespace core;
+namespace _core;
 
 class ErrorHandler
 {
@@ -31,6 +31,7 @@ class ErrorHandler
 
     public function errorHandler($errN, $errStr, $file, $line, $context)
     {
+        if (ENVIRONMENT == 'production') return;
         $errors = [
             E_NOTICE => "Notice",
             E_WARNING => "Warning",
@@ -49,6 +50,5 @@ class ErrorHandler
             <?= $context && $errN != 256 ? print_r($context) : '' ?>
         </p>
 <?php
-        die();
     }
 }

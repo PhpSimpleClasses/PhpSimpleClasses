@@ -1,10 +1,6 @@
 <?php
 
-namespace core;
-
-use ErrorException;
-use Exception;
-use \PDO;
+namespace _core;
 
 class pscInit
 {
@@ -27,5 +23,11 @@ class PSC
     {
         if ($data) extract($data);
         require(SOURCEPATH . str_replace('/', DS, $path) . '.php');
+    }
+    public function json($data = [])
+    {
+        header('Content-Type: application/json');
+        echo json_encode($data);
+        die();
     }
 }

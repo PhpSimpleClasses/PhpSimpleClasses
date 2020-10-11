@@ -2,8 +2,7 @@
 
 /**
  * PHP Simple Classes
- * Version: 1.0
- * Author: Zimaldo Junior
+ * Version: 1.2.1-alpha
  * 
  * config.php:
  * Initial settings that are included when running a page. 
@@ -14,10 +13,13 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('BASEPATH', realpath(__DIR__) . DS);
 define('SOURCEPATH', BASEPATH . 'src' . DS);
-
-$_baseurl = explode('/', $_SERVER['REQUEST_URI'])[1] ?? '';
-define('BASEURL', '/' . $_baseurl . ($_baseurl ? '/' : ''));
 //===========================
+
+//CONTEXT==============
+define('BASEURL', '/');
+define('ENVIRONMENT', 'development');
+//development OR production
+//======================
 
 //DB====================
 define('DB_HOST', 'localhost');
@@ -26,7 +28,7 @@ define('DB_PASS', '');
 define('DB_NAME', 'test');
 //======================
 
-//ERRORS====================
+//ERRORS================
 define('IGNORE_NOTICE', TRUE);
 define('IGNORE_WARNING', FALSE);
-//==========================
+//======================

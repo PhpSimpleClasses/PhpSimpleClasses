@@ -1,6 +1,6 @@
 <?php
 
-namespace core;
+namespace _core;
 
 class DB
 {
@@ -11,7 +11,6 @@ class DB
     private $table;
     private $type;
     private $values;
-    private $err;
     private $join;
 
     public function __construct()
@@ -26,16 +25,6 @@ class DB
             $msg = "Failed to connect to MySQL: " . $this->link->connect_error;
             trigger_error($this->err->strDebug($msg), E_USER_ERROR);
         }
-    }
-
-    public function exec($query)
-    {
-        if (!$res = $this->link->query($query, MYSQLI_ASSOC)) {
-            $msg = "Mysql error: " . $this->link->error;
-            trigger_error($this->err->strDebug($msg), E_USER_ERROR);
-        }
-        $this->link->close();
-        return $res;
     }
 
     private function processQueryCols($set = false, $values = false)
@@ -77,7 +66,7 @@ class DB
 
             default:
                 $msg = "Unexpected operation, use queryBuilder only for SELECT, INSERT, UPDATE and DELETE." .
-                    "<BR>For other operations, execute the query directly with exec.";
+                    "<BR>For other operations, execute the query directly with \$this->db->exec.";
                 trigger_error($this->err->strDebug($msg), E_USER_ERROR);
                 break;
         }
@@ -115,6 +104,16 @@ class DB
         unset($this->cols);
         unset($this->table);
         unset($this->type);
+    }
+
+    public function exec($query)
+    {
+        if (!$res = $this->link->query($query, MYSQLI_ASSOC)) {
+            $msg = "Mysql error: " . $this->link->error;
+            trigger_error($this->err->strDebug($msg), E_USER_ERROR);
+        }
+        $this->link->close();
+        return $res;
     }
 
     public function get($run = true)

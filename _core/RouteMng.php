@@ -1,16 +1,15 @@
 <?php
 
-namespace core;
+namespace _core;
 
 class RouteMng
 {
     public function __construct($uri)
     {
-
         require_once(BASEPATH . 'routes.php');
         foreach ($routes as $route => $function) {
             $match = [];
-            $routeRgx = '/^' . str_replace(['$', '/'], ['([^/]+)', '\/'], $route) . '$/';
+            $routeRgx = '/^' . str_replace(['$', '/'], ['([^/]+)', '\/'], $route) . '(?:\/?)$/';
             preg_match($routeRgx, $uri, $match);
             if ($match) {
                 break;
