@@ -108,10 +108,13 @@ class DB
 
     public function exec($query)
     {
-        if (!$res = $this->link->query($query, MYSQLI_ASSOC)) {
+        if (!$rows = $this->link->query($query, MYSQLI_ASSOC)) {
             $msg = "Mysql error: " . $this->link->error;
             trigger_error($this->err->strDebug($msg), E_USER_ERROR);
         }
+        while ($row = $rows->fetch_assoc()) {
+            $res[] = $row;
+        };
         $this->link->close();
         return $res;
     }
