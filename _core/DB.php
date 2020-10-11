@@ -188,9 +188,9 @@ class DB
                     '<BR>Ex: "colum !=" ';
                 trigger_error($this->err->strDebug($err), E_USER_ERROR);
             }
-            if ($value) {
+            if ($value != '') {
                 $this->where[] = [
-                    'data' => [$columOrArray => $value],
+                    'data' => [$columOrArray => "$value"],
                     'type' => 'AND'
                 ];
             } else {
