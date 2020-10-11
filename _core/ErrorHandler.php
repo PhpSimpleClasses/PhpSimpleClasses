@@ -47,7 +47,7 @@ class ErrorHandler
             <strong><?= $errStr ?></strong><br>
             File: <?= $file ?><br>
             <strong>Line <?= $line ?><br></strong>
-            <?= $context && $errN != 256 ? print_r($context) : '' ?>
+            <?= $context && $errN != 256 ? @print_r($context) : '' ?>
         </p>
 <?php
     }
