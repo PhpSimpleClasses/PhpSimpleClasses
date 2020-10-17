@@ -1,6 +1,7 @@
 # PhpSimpleClasses
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/zimaldo/PhpSimpleClasses?style=for-the-badge)
+![Packagist Version](https://img.shields.io/packagist/v/psc/psc?style=for-the-badge)
 ![GitHub repo size](https://img.shields.io/github/repo-size/zimaldo/PhpSimpleClasses?style=for-the-badge)
 ![Packagist PHP Version Support](https://img.shields.io/packagist/php-v/psc/psc?style=for-the-badge)
 ![GitHub](https://img.shields.io/github/license/zimaldo/PhpSimpleClasses?style=for-the-badge)
