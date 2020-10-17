@@ -1,7 +1,7 @@
 RewriteEngine On
 
-RewriteCond %{DOCUMENT_ROOT}/public/%{REQUEST_URI} -f
-RewriteRule (.*) /public/$1 [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ public/$1
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^.*$ public/index.php [L,QSA]
