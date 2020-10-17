@@ -165,16 +165,20 @@ $this->load('Views/test', $vars);
 
 Then inside `src/Views/test.php`:
 
-```php
+```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hello</title>
-</head>
-<body>
-    Hello! My name is <?= $name ?> and i have <?= $age ?> years old.
-</body>
+  </head>
+  <body>
+    Hello! My name is
+    <?= $name ?>
+    and i have
+    <?= $age ?>
+    years old.
+  </body>
 </html>
 ```
