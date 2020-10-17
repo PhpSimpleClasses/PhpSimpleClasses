@@ -7,6 +7,11 @@ use _core\PSC;
 class example extends PSC
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function exampleFunction()
     {
         $exampleModel = new \Models\example;
