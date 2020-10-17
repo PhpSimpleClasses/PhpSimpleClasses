@@ -21,6 +21,7 @@ class PSC
     }
     public function load($path, $data = [])
     {
+        if (defined('ERR_LOG') && ERR_LOG) return;
         if ($data) extract($data);
         require(SOURCEPATH . str_replace('/', DS, $path) . '.php');
     }

@@ -5,15 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
+    <link rel="stylesheet" href="<?= BASEURL ?>styles/views/global.css">
 </head>
 
 <body>
-    <span style="background-color:black;color:white;">Hello!</span>
-    <p>
-        <span style="background-color:red;"><?= $description ?></span>
-        <BR>
-        <span style="background-color:green;"><?= $query ?></span>
-    </p>
+    <div class="psc-base">
+        <h1>Welcome, <br>to PHP Simple Classes</h1>
+        <h2>Query Builder Example:</h2>
+        <p>
+            <span><?= $description ?></span>
+            <span><?= $query ?></span>
+        </p>
+    </div>
 </body>
 
 </html>

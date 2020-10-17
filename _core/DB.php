@@ -23,7 +23,7 @@ class DB
         $this->link = new \mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
         if ($this->link->connect_errno) {
             $msg = "Failed to connect to MySQL: " . $this->link->connect_error;
-            trigger_error($this->err->strDebug($msg), E_USER_ERROR);
+            trigger_error($msg, E_USER_ERROR);
         }
     }
 
@@ -67,7 +67,7 @@ class DB
             default:
                 $msg = "Unexpected operation, use queryBuilder only for SELECT, INSERT, UPDATE and DELETE." .
                     "<BR>For other operations, execute the query directly with \$this->db->exec.";
-                trigger_error($this->err->strDebug($msg), E_USER_ERROR);
+                trigger_error($msg, E_USER_ERROR);
                 break;
         }
         if ($this->join) {
@@ -110,7 +110,7 @@ class DB
     {
         if (!$rows = $this->link->query($query, MYSQLI_ASSOC)) {
             $msg = "Mysql error: " . $this->link->error;
-            trigger_error($this->err->strDebug($msg), E_USER_ERROR);
+            trigger_error($msg, E_USER_ERROR);
         }
         while ($row = $rows->fetch_assoc()) {
             $res[] = $row;
@@ -180,13 +180,13 @@ class DB
         } else {
             if (empty($columOrArray)) {
                 $msg = '$this->db->where: first parameter is empty';
-                trigger_error($this->err->strDebug($msg), E_USER_ERROR);
+                trigger_error($msg, E_USER_ERROR);
             }
             $xCol = explode(' ', $columOrArray);
             if (count($xCol) > 2 && !empty($value)) {
                 $err = '$this->db->where: first parameter expects a maximum of 2 arguments in the same string when second parmeter is especified.' .
                     '<BR>Ex: "colum !=" ';
-                trigger_error($this->err->strDebug($err), E_USER_ERROR);
+                trigger_error($err, E_USER_ERROR);
             }
             if ($value != '') {
                 $this->where[] = [
@@ -210,13 +210,13 @@ class DB
         } else {
             if (empty($columOrArray)) {
                 $msg = '$this->db->or_where: first parameter is empty';
-                trigger_error($this->err->strDebug($msg), E_USER_ERROR);
+                trigger_error($msg, E_USER_ERROR);
             }
             $xCol = explode(' ', $columOrArray);
             if (count($xCol) > 2 && !empty($value)) {
                 $err = '$this->db->or_where: first parameter expects a maximum of 2 arguments in the same string when second parmeter is especified.' .
                     '<BR>Ex: "colum !=" ';
-                trigger_error($this->err->strDebug($err), E_USER_ERROR);
+                trigger_error($err, E_USER_ERROR);
             }
             if ($value) {
                 $this->where[] = [
