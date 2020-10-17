@@ -2,7 +2,6 @@
 
 /**
  * PHP Simple Classes
- * Version: 1.2.6
  * 
  * config.php:
  * Initial settings that are included when running a page. 
