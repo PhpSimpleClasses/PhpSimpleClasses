@@ -133,7 +133,7 @@ public function getAllUsers(){
 
 #### Classes:
 
-All content in [`src`](src) follow PHP default OO scheme. If are you running a route to `Controllers/Test.php`, your current namespace is `Controllers`, then you can call in this class:
+All content in [`src`](src) follow PHP OO default scheme. If are you running a route to `Controllers/Test.php`, your current namespace is `Controllers`, then you can call in this class:
 
 ```php
 $myOtherClass = new OtherClass();
