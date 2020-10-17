@@ -2,7 +2,7 @@
 
 /**
  * PHP Simple Classes
- * Version: 1.2.1-alpha
+ * Version: 1.2.4
  * 
  * config.php:
  * Initial settings that are included when running a page. 
