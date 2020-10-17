@@ -15,11 +15,9 @@ class example extends PSC
     public function exampleFunction()
     {
         $exampleModel = new \Models\example;
-        //Set DB in config.php to run this example
-        /* 
+
         $data['query'] = $exampleModel->queryBuilderTest();
         $data['description'] = 'This is a DB query example using query builder:';
-        */
 
         $data['title'] = 'PHP Simple Classes';
         $this->load('Views/example', $data);

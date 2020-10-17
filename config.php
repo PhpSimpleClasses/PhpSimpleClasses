@@ -17,7 +17,7 @@ define('SOURCEPATH', BASEPATH . 'src' . DS);
 
 //CONTEXT==============
 define('BASEURL', '/');
-define('ENVIRONMENT', 'development');
+define('ENVIRONMENT', 'production');
 //development OR production
 //======================
 
@@ -31,4 +31,5 @@ define('DB_NAME', 'test');
 //ERRORS================
 define('IGNORE_NOTICE', TRUE);
 define('IGNORE_WARNING', FALSE);
+define('IGNORE_VIEW', TRUE);
 //======================
