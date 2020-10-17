@@ -1,10 +1,10 @@
 {
-    "name" : "phpsc/phpsc",
+    "name" : "psclasses/psclasses",
     "description": "Only what is necessary to start an empty Object Oriented PHP project, with a route scheme.",
     "version": "1.2.4",
     "type": "project",
     "keywords": ["phpsc", "php", "simple", "classes", "easy", "oo", "object", "oriented", "project", "framework"],
-    "homepage": "https://github.com/zimaldo/phpsc",
+    "homepage": "https://github.com/zimaldo/PhpSimpleClasses",
     "license": "MIT",
     "authors": [{"name": "Zimaldo Junior", "role": "Developer"}],
     "require" : {
