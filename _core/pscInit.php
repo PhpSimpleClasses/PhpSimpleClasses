@@ -5,10 +5,12 @@ namespace _core;
 class pscInit
 {
 
-    public function __construct($request)
+    public function __construct($request = '')
     {
         new ErrorHandler;
-        new RouteMng($request);
+        if ($request) {
+            new RouteMng($request);
+        }
     }
 }
 

@@ -33,10 +33,13 @@ class DB
         $queryValues = '';
         for ($i = 0; $i < count($this->cols); $i++) {
             $query .= ($i == 0 ? ' ' : ', ') . ($set ?
-                (array_keys($this->cols)[$i] . " = $this->cols[$i]") : ($values ? array_keys($this->cols)[$i] : $this->cols[$i]));
+                (array_keys($this->cols)[$i] . " = '" . mysqli_real_escape_string(
+                    $this->link,
+                    $this->cols[array_keys($this->cols)[$i]]
+                ) . "'") : ($values ? array_keys($this->cols)[$i] : $this->cols[$i]));
 
             if ($values) {
-                $val = mysqli_real_escape_string($this->link, $this->cols[$i]);
+                $val = mysqli_real_escape_string($this->link, $this->cols[array_keys($this->cols)[$i]]);
                 $queryValues .= ($i == 0 ? ' ' : ' ,') . "'$val'";
             }
         }
@@ -98,32 +101,43 @@ class DB
         return $query;
     }
 
+    private function runQuery($query)
+    {
+        if (!$rows = $this->link->query($query, MYSQLI_ASSOC)) {
+            $msg = "Mysql error: " . $this->link->error;
+            trigger_error($msg, E_USER_ERROR);
+        }
+        if (!is_bool($rows)) {
+            while ($row = $rows->fetch_assoc()) {
+                $res[] = $row;
+            };
+        }
+
+        $this->link->close();
+        return $res;
+    }
+
     public function clearQuery()
     {
         unset($this->where);
         unset($this->cols);
         unset($this->table);
         unset($this->type);
+        unset($this->values);
+        unset($this->join);
     }
 
     public function exec($query)
     {
-        if (!$rows = $this->link->query($query, MYSQLI_ASSOC)) {
-            $msg = "Mysql error: " . $this->link->error;
-            trigger_error($msg, E_USER_ERROR);
-        }
-        while ($row = $rows->fetch_assoc()) {
-            $res[] = $row;
-        };
-        $this->link->close();
-        return $res;
+        $this->linkStart();
+        return $this->runQuery($query);
     }
 
     public function get($run = true)
     {
         $query = $this->queryBuilder();
         $this->clearQuery();
-        return $run ? $this->exec($query) : $query;
+        return $run ? $this->runQuery($query) : $query;
     }
 
     public function insert($table, $cols)

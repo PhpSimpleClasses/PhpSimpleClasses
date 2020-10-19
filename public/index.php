@@ -13,12 +13,12 @@ if (ENVIRONMENT == 'production') {
 }
 
 spl_autoload_register(function ($class) {
-    $class = str_replace("\\", DS, $class);
-    if (explode("\\", $class)[0] == '_core') return include_once(BASEPATH . "$class.php");
-    return include_once(SOURCEPATH . "$class.php");
+    $classPath = str_replace("\\", DS, $class);
+    if (explode("\\", $class)[0] == '_core') return include_once(BASEPATH . "$classPath.php");
+    return include_once(SOURCEPATH . "$classPath.php");
 });
 
-$xuri = explode(BASEURL, $_SERVER['REQUEST_URI']);
+$xuri = explode(BASEURL, @$_SERVER['REQUEST_URI']);
 $xuri[0] = '';
 $uri = implode('/', $xuri);
 new _core\pscInit($uri);
