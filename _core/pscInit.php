@@ -5,11 +5,17 @@ namespace _core;
 class pscInit
 {
 
-    public function __construct($request = '')
+    public function __construct()
     {
         new ErrorHandler;
-        if ($request) {
-            new RouteMng($request);
+        $xuri = explode(BASEURL, @$_SERVER['REQUEST_URI']);
+        $xuri[0] = '';
+        $uri = @$_SERVER['REQUEST_URI'] ? implode('/', $xuri) : null;
+        if ($uri) {
+            define('CLI', false);
+            new RouteMng($uri);
+        } else {
+            define('CLI', true);
         }
     }
 }

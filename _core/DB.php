@@ -12,6 +12,8 @@ class DB
     private $type;
     private $values;
     private $join;
+    private $orderBy;
+    private $limit;
 
     public function __construct()
     {
@@ -98,6 +100,14 @@ class DB
             }
         }
 
+        if ($this->orderBy) {
+            $query .= " ORDER BY {$this->orderBy}";
+        }
+
+        if ($this->orderBy) {
+            $query .= " LIMIT {$this->limit}";
+        }
+
         return $query;
     }
 
@@ -138,6 +148,13 @@ class DB
         $query = $this->queryBuilder();
         $this->clearQuery();
         return $run ? $this->runQuery($query) : $query;
+    }
+
+    public function getRow($run = true)
+    {
+        $query = $this->queryBuilder();
+        $this->clearQuery();
+        return $run ? $this->runQuery($query)[0] : $query;
     }
 
     public function insert($table, $cols)
@@ -190,7 +207,12 @@ class DB
     public function where($columOrArray, $value = '')
     {
         if (is_array($columOrArray)) {
-            $this->where = array_merge($this->where, $columOrArray);
+            foreach ($columOrArray as $key => $val) {
+                $this->where[] = [
+                    'data' => [$key => "$val"],
+                    'type' => 'AND'
+                ];
+            }
         } else {
             if (empty($columOrArray)) {
                 $msg = '$this->db->where: first parameter is empty';
@@ -220,7 +242,12 @@ class DB
     public function orWhere($columOrArray, $value = '')
     {
         if (is_array($columOrArray)) {
-            $this->where = array_merge($this->where, $columOrArray);
+            foreach ($columOrArray as $key => $val) {
+                $this->where[] = [
+                    'data' => [$key => "$val"],
+                    'type' => 'OR'
+                ];
+            }
         } else {
             if (empty($columOrArray)) {
                 $msg = '$this->db->or_where: first parameter is empty';
@@ -251,6 +278,18 @@ class DB
     {
         if ($joinType) $joinType .= ' ';
         $this->join[] = " $joinType" . "JOIN $table ON ($on)";
+        return $this;
+    }
+
+    public function orderBy($orderBy)
+    {
+        $this->orderBy = $orderBy;
+        return $this;
+    }
+
+    public function limit($n)
+    {
+        $this->limit = $n;
         return $this;
     }
 }
