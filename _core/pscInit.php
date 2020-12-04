@@ -11,6 +11,7 @@ class pscInit
         $xuri = explode(BASEURL, @$_SERVER['REQUEST_URI']);
         $xuri[0] = '';
         $uri = @$_SERVER['REQUEST_URI'] ? implode('/', $xuri) : null;
+        $uri = explode('?', $uri)[0];
         if ($uri) {
             define('CLI', false);
             new RouteMng($uri);
