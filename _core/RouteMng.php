@@ -7,7 +7,13 @@ class RouteMng
     public function __construct($uri)
     {
         require_once(BASEPATH . 'routes.php');
-        foreach ($routes as $route => $function) {
+        foreach ($routes as $item) {
+            $route = $item[0];
+            $function = $item[1];
+            $method = $item[2] ?? null;
+
+            if($method && ($_SERVER['REQUEST_METHOD']!=$method)) continue;
+
             $match = [];
             $routeRgx = '/^' . str_replace(['$', '/'], ['([^/]+)', '\/'], $route) . '(?:\/?)$/';
             preg_match($routeRgx, $uri, $match);

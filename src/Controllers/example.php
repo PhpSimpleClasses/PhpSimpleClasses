@@ -12,6 +12,15 @@ class example extends PSC
         parent::__construct();
     }
 
+
+    public function postTest(){
+        echo '<pre>';
+        print_r($_POST);
+    }
+    public function getTest(){
+        echo ':D';
+    }
+
     public function exampleFunction()
     {
         $exampleModel = new \Models\example;
