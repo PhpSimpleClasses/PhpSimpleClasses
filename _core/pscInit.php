@@ -24,9 +24,13 @@ class pscInit
 class PSC
 {
 
+    public $db;
+    public $http;
+
     public function __construct()
     {
         $this->db = new DB;
+        $this->http = new HTTP;
     }
     public function load($path, $data = [])
     {

@@ -127,6 +127,9 @@ class DB
         return $res;
     }
 
+    /**
+     * Clears all settings not performed in the query builder.
+     */
     public function clearQuery()
     {
         unset($this->where);
@@ -137,40 +140,61 @@ class DB
         unset($this->join);
     }
 
-    public function exec($query)
+    /**
+     * Executes a query on the database.
+     * @param string $query The query string.
+     * @return array
+     */
+    public function exec(string $query)
     {
         $this->linkStart();
         return $this->runQuery($query);
     }
 
-    public function get($run = true)
+    /**
+     * Run the settings on query builder and return results.
+     * @param bool $run Set false to return the query string.
+     * @return array
+     */
+    public function get(bool $run = true)
     {
         $query = $this->queryBuilder();
         $this->clearQuery();
         return $run ? $this->runQuery($query) : $query;
     }
 
-    public function getRow($run = true)
+    /**
+     * Run the settings on query builder and return only first result.
+     * @return array
+     */
+    public function getRow()
     {
+        $this->limit(1);
         $query = $this->queryBuilder();
         $this->clearQuery();
-        return $run ? $this->runQuery($query)[0] : $query;
+        return $this->runQuery($query)[0];
     }
 
-    public function insert($table, $cols)
+    /**
+     * Insert data on database table
+     * @param string $table Table name
+     * @param array $cols Array with columns names and values: ['foo' => 'bar']
+     */
+    public function insert(string $table, array $cols)
     {
         $this->type = "INSERT";
         $this->table = $table;
-        if (is_array($cols)) {
-            $this->cols = $cols;
-        } else {
-            $this->cols = [$cols];
-        }
+        $this->cols = $cols;
 
         return $this;
     }
 
-    public function select($table, $cols = '')
+    /**
+     * Select data on database table
+     * @param string $table Table name
+     * @param string $cols Columns to select: 'col1, col2, col3'
+     */
+    public function select(string $table, string $cols = '')
     {
         $this->type = "SELECT";
         $this->table = $table;
@@ -183,42 +207,55 @@ class DB
         return $this;
     }
 
-    public function update($table, $cols)
+
+    /**
+     * Update data on database table
+     * @param string $table Table name
+     * @param array $cols Array with columns names and values: ['foo' => 'bar']
+     */
+    public function update(string $table, array $cols)
     {
 
         $this->type = "UPDATE";
         $this->table = $table;
-        if (is_array($cols)) {
-            $this->cols = $cols;
-        } else {
-            $this->cols = [$cols];
-        }
+        $this->cols = $cols;
+
 
         return $this;
     }
 
-    public function delete($table)
+    /**
+     * Delete data from table
+     * @param string $table Table name
+     */
+    public function delete(string $table)
     {
         $this->type = "DELETE";
         $this->table = $table;
         return $this;
     }
 
-    public function where($columOrArray, $value = '')
+    /**
+     * Add condition to query
+     * @param array/string $cols Array with columns names and values: ['foo' => 'bar', 'age >' => '17']
+     * or String to only 1 condition (use second parameter to value): 'age >'
+     * @param string $value Optional value to 1 condition: '17'
+     */
+    public function where($cols, string $value = '')
     {
-        if (is_array($columOrArray)) {
-            foreach ($columOrArray as $key => $val) {
+        if (is_array($cols)) {
+            foreach ($cols as $key => $val) {
                 $this->where[] = [
                     'data' => [$key => "$val"],
                     'type' => 'AND'
                 ];
             }
         } else {
-            if (empty($columOrArray)) {
+            if (empty($cols)) {
                 $msg = '$this->db->where: first parameter is empty';
                 trigger_error($msg, E_USER_ERROR);
             }
-            $xCol = explode(' ', $columOrArray);
+            $xCol = explode(' ', $cols);
             if (count($xCol) > 2 && !empty($value)) {
                 $err = '$this->db->where: first parameter expects a maximum of 2 arguments in the same string when second parmeter is especified.' .
                     '<BR>Ex: "colum !=" ';
@@ -226,12 +263,12 @@ class DB
             }
             if ($value != '') {
                 $this->where[] = [
-                    'data' => [$columOrArray => "$value"],
+                    'data' => [$cols => "$value"],
                     'type' => 'AND'
                 ];
             } else {
                 $this->where[] = [
-                    'data' => [$columOrArray],
+                    'data' => [$cols],
                     'type' => 'AND'
                 ];
             }
@@ -239,21 +276,27 @@ class DB
         return $this;
     }
 
-    public function orWhere($columOrArray, $value = '')
+    /**
+     * Add 'OR' condition to query
+     * @param array/string $cols Array with columns names and values: ['foo' => 'bar', 'age >' => '17']
+     * or String to only 1 condition (use second parameter to value): 'age >'
+     * @param string $value Optional value to 1 condition: '17'
+     */
+    public function orWhere($cols, string $value = '')
     {
-        if (is_array($columOrArray)) {
-            foreach ($columOrArray as $key => $val) {
+        if (is_array($cols)) {
+            foreach ($cols as $key => $val) {
                 $this->where[] = [
                     'data' => [$key => "$val"],
                     'type' => 'OR'
                 ];
             }
         } else {
-            if (empty($columOrArray)) {
+            if (empty($cols)) {
                 $msg = '$this->db->or_where: first parameter is empty';
                 trigger_error($msg, E_USER_ERROR);
             }
-            $xCol = explode(' ', $columOrArray);
+            $xCol = explode(' ', $cols);
             if (count($xCol) > 2 && !empty($value)) {
                 $err = '$this->db->or_where: first parameter expects a maximum of 2 arguments in the same string when second parmeter is especified.' .
                     '<BR>Ex: "colum !=" ';
@@ -261,12 +304,12 @@ class DB
             }
             if ($value) {
                 $this->where[] = [
-                    'data' => [$columOrArray => $value],
+                    'data' => [$cols => $value],
                     'type' => 'OR'
                 ];
             } else {
                 $this->where[] = [
-                    'data' => [$columOrArray],
+                    'data' => [$cols],
                     'type' => 'OR'
                 ];
             }
@@ -274,20 +317,34 @@ class DB
         return $this;
     }
 
-    public function join($table, $on, $joinType = '')
+    /**
+     * Join tables data with condition
+     * @param string $table Table name
+     * @param string $on Condition
+     * @param string $joinType Optional type to join (left, right, inner...)
+     */
+    public function join(string $table, string $on, string $joinType = '')
     {
         if ($joinType) $joinType .= ' ';
         $this->join[] = " $joinType" . "JOIN $table ON ($on)";
         return $this;
     }
 
-    public function orderBy($orderBy)
+    /**
+     * Order a query by column
+     * @param string $col Colum name
+     */
+    public function orderBy($col)
     {
-        $this->orderBy = $orderBy;
+        $this->orderBy = $col;
         return $this;
     }
 
-    public function limit($n)
+    /**
+     * Limit query results
+     * @param int $n Rows limit
+     */
+    public function limit(int $n)
     {
         $this->limit = $n;
         return $this;
