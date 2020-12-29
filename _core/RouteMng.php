@@ -12,7 +12,7 @@ class RouteMng
             $function = $item[1];
             $method = $item[2] ?? null;
 
-            if($method && ($_SERVER['REQUEST_METHOD']!=$method)) continue;
+            if($method && (strtolower($_SERVER['REQUEST_METHOD'])!=strtolower($method))) continue;
 
             $match = [];
             $routeRgx = '/^' . str_replace(['$', '/'], ['([^/]+)', '\/'], $route) . '(?:\/?)$/';
