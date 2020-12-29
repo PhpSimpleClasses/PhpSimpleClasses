@@ -15,8 +15,7 @@ Only what is necessary to start an empty Object Oriented PHP project, with a rou
 ### Git Clone:
 
 ```shell
-$ git clone https://github.com/zimaldo/PhpSimpleClasses
-$ mv PhpSimpleClasses MyProject
+$ git clone https://github.com/zimaldo/PhpSimpleClasses MyProject
 $ cd MyProject
 ```
 
@@ -25,8 +24,7 @@ OR
 ### Composer:
 
 ```shell
-$ composer create-project psc/psc
-$ mv psc MyProject
+$ composer create-project psc/psc MyProject
 $ cd MyProject
 ```
 
