@@ -54,7 +54,7 @@ Open [`routes.php`](routes.php), as can you see in examples routes, you must set
 Ex.:
 
 ```php
-$routes['/my/first'] = 'Test/firstFunction';
+$routes[] = ['/my/first', 'Test/firstFunction'];
 ```
 
 To pass parameters, use `$` as wildcard on write a route. The function on controller will receive the parameters in same order.
@@ -62,7 +62,7 @@ To pass parameters, use `$` as wildcard on write a route. The function on contro
 Ex.:
 
 ```php
-$routes['/user/$/details'] = 'Users/details';
+$routes[] = ['/user/$/details', 'Users/details'];
 
 //In src/Controllers/Users.php:
 //...
