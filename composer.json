@@ -1,7 +1,7 @@
 {
     "name": "psc/psc",
     "description": "Only what is necessary to start an empty Object Oriented PHP project, with a route scheme.",
-    "version": "1.5.1",
+    "version": "1.5.2",
     "type": "project",
     "keywords": [
         "phpsc",
@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": "~7.0",
         "ext-mysqli": "*"
     }
 }
