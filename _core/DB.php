@@ -104,7 +104,7 @@ class DB
             $query .= " ORDER BY {$this->orderBy}";
         }
 
-        if ($this->orderBy) {
+        if ($this->limit) {
             $query .= " LIMIT {$this->limit}";
         }
 
