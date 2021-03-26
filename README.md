@@ -51,7 +51,7 @@ First, configure your `context` section in [`config.php`](config.php), if you wa
 Open [`routes.php`](routes.php), as can you see in examples routes, you must set in the `$routes` array, a route like key and a class/function like value.
 (This class have to be on [`Controllers`](src/Controllers)).
 
-Ex.:
+e.g.:
 
 ```php
 $routes[] = ['/my/first', 'Test/firstFunction'];
@@ -59,7 +59,7 @@ $routes[] = ['/my/first', 'Test/firstFunction'];
 
 To pass parameters, use `$` as wildcard on write a route. The function on controller will receive the parameters in same order.
 
-Ex.:
+e.g.:
 
 ```php
 $routes[] = ['/user/$/details', 'Users/details'];
@@ -76,7 +76,7 @@ public function details($userId){
 
 First you need to extends the `PSC` class:
 
-Ex.:
+e.g.:
 
 ```php
 //In src/Controllers/Something.php:

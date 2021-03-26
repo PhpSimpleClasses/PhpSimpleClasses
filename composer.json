@@ -1,35 +1,35 @@
 {
-    "name": "psc/psc",
-    "description": "Only what is necessary to start an empty Object Oriented PHP project, with a route scheme.",
-    "version": "1.5.4",
-    "type": "project",
-    "keywords": [
-        "phpsc",
-        "php",
-        "simple",
-        "classes",
-        "easy",
-        "oo",
-        "object",
-        "oriented",
-        "project",
-        "framework",
-        "psc"
-    ],
-    "homepage": "https://github.com/zimaldo/PhpSimpleClasses",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "Zimaldo Junior",
-            "role": "Developer"
-        },
-        {
-            "name": "Pablo Paixão (pablo2p)",
-            "role": "FrontEnd"
-        }
-    ],
-    "require": {
-        "php": "~7.0",
-        "ext-mysqli": "*"
+  "name": "psc/psc",
+  "description": "Only what is necessary to start an empty Object Oriented PHP project, with a route scheme.",
+  "version": "1.5.7",
+  "type": "project",
+  "keywords": [
+    "phpsc",
+    "php",
+    "simple",
+    "classes",
+    "easy",
+    "oo",
+    "object",
+    "oriented",
+    "project",
+    "framework",
+    "psc"
+  ],
+  "homepage": "https://github.com/zimaldo/PhpSimpleClasses",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Zimaldo Junior",
+      "role": "Developer"
+    },
+    {
+      "name": "Pablo Paixão (pablo2p)",
+      "role": "FrontEnd"
     }
+  ],
+  "require": {
+    "php": "~7.0",
+    "ext-mysqli": "*"
+  }
 }

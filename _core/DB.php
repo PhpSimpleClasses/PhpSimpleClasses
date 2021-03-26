@@ -12,6 +12,7 @@ class DB
     private $type;
     private $values;
     private $join;
+    private $groupBy;
     private $orderBy;
     private $limit;
 
@@ -86,13 +87,18 @@ class DB
                 $wType = $this->where[$i]['type'];
                 $wData = $this->where[$i]['data'];
 
-                $key = array_keys($wData)[0];
-                $val = mysqli_real_escape_string($this->link, $wData[$key]);
+                $kv = '';
 
-                @$subW = explode(' ', $key);
+                foreach ($wData as $key => $val) {
+                    @$subW = explode(' ', $key);
+                    $val = mysqli_real_escape_string($this->link, $val);
+                    $kv .= $kv ? ' AND ' : '';
+                    $kv .= (count($subW) > 1) ? " $key '$val'" : " $key = '$val'";
+                }
+                if (count($wData) > 1) $val = $kv;
 
                 $query .= $i > 0 ? " $wType" : "";
-                if (!is_numeric($key)) {
+                if (!is_numeric($key) && count($wData) == 1) {
                     $query .= (count($subW) > 1) ? " ($key '$val')" : " ($key = '$val')";
                 } else {
                     $query .= " ($val)";
@@ -100,13 +106,10 @@ class DB
             }
         }
 
-        if ($this->orderBy) {
-            $query .= " ORDER BY {$this->orderBy}";
-        }
+        if ($this->groupBy) $query .= " GROUP BY {$this->groupBy}";
+        if ($this->orderBy) $query .= " ORDER BY {$this->orderBy}";
+        if ($this->limit) $query .= " LIMIT {$this->limit}";
 
-        if ($this->limit) {
-            $query .= " LIMIT {$this->limit}";
-        }
 
         return $query;
     }
@@ -138,6 +141,9 @@ class DB
         unset($this->type);
         unset($this->values);
         unset($this->join);
+        unset($this->limit);
+        unset($this->orderBy);
+        unset($this->groupBy);
     }
 
     /**
@@ -244,12 +250,10 @@ class DB
     public function where($cols, string $value = '')
     {
         if (is_array($cols)) {
-            foreach ($cols as $key => $val) {
-                $this->where[] = [
-                    'data' => [$key => "$val"],
-                    'type' => 'AND'
-                ];
-            }
+            $this->where[] = [
+                'data' => $cols,
+                'type' => 'AND'
+            ];
         } else {
             if (empty($cols)) {
                 $msg = '$this->db->where: first parameter is empty';
@@ -258,7 +262,7 @@ class DB
             $xCol = explode(' ', $cols);
             if (count($xCol) > 2 && !empty($value)) {
                 $err = '$this->db->where: first parameter expects a maximum of 2 arguments in the same string when second parmeter is especified.' .
-                    '<BR>Ex: "colum !=" ';
+                    '<BR>Ex: "column !=" ';
                 trigger_error($err, E_USER_ERROR);
             }
             if ($value != '') {
@@ -285,12 +289,10 @@ class DB
     public function orWhere($cols, string $value = '')
     {
         if (is_array($cols)) {
-            foreach ($cols as $key => $val) {
-                $this->where[] = [
-                    'data' => [$key => "$val"],
-                    'type' => 'OR'
-                ];
-            }
+            $this->where[] = [
+                'data' => $cols,
+                'type' => 'OR'
+            ];
         } else {
             if (empty($cols)) {
                 $msg = '$this->db->or_where: first parameter is empty';
@@ -299,7 +301,7 @@ class DB
             $xCol = explode(' ', $cols);
             if (count($xCol) > 2 && !empty($value)) {
                 $err = '$this->db->or_where: first parameter expects a maximum of 2 arguments in the same string when second parmeter is especified.' .
-                    '<BR>Ex: "colum !=" ';
+                    '<BR>Ex: "column !=" ';
                 trigger_error($err, E_USER_ERROR);
             }
             if ($value) {
@@ -331,12 +333,22 @@ class DB
     }
 
     /**
-     * Order a query by column
-     * @param string $col Colum name
+     * Order results by column
+     * @param string $col Column name
      */
     public function orderBy($col)
     {
         $this->orderBy = $col;
+        return $this;
+    }
+
+    /**
+     * Group results by column
+     * @param string $col Column name
+     */
+    public function groupBy($col)
+    {
+        $this->groupBy = $col;
         return $this;
     }
 

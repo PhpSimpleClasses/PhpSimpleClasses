@@ -32,13 +32,25 @@ class PSC
         $this->db = new DB;
         $this->http = new HTTP;
     }
-    public function load($path, $data = [])
+
+
+    /**
+     * Load a script
+     * @param string $path Path of script without extension (e.g.: Views/index)
+     * @param array $data Array to be extracted to variables that can be used on loaded script
+     */
+    public function load(string $path, array $data = [])
     {
         if (defined('ERR_LOG') && ERR_LOG) return;
         if ($data) extract($data);
         require(SOURCEPATH . str_replace('/', DS, $path) . '.php');
     }
-    public function json($data = [])
+
+    /**
+     * Print a JSON from array and ends the program
+     * @param array $data Array to be converted in JSON
+     */
+    public function json(array $data = [])
     {
         header('Content-Type: application/json');
         echo json_encode($data);
