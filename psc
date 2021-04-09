@@ -71,19 +71,36 @@ function create($args)
         printl('You must specify a name to item', 'red');
         printl('E.g.: create controller main', 'black', true, 'yellow');
     }
-    $supportedTypes = ['Model', 'Controller', 'Library'];
+    $supportedTypes = ['Model', 'Controller', 'Library', 'Class'];
     $itemType[0] = strtoupper($itemType[0]);
     $itemName[0] = strtoupper($itemName[0]);
     if (!in_array($itemType, $supportedTypes))
         printl("'$itemType' is not a supported item to create", 'red', true);
 
-    $folder = $itemType . 's';
-    if ($itemType[strlen($itemType) - 1] == 'y') $folder = substr($itemType, 0, strlen($itemType) - 1) . 'ies';
-
+    $folder = '';
+    if ($itemType == 'Class') {
+        $x = explode('/', $itemName);
+        if (count($x) > 1) {
+            $itemName = end($x);
+            unset($x[count($x) - 1]);
+            foreach ($x as $subF) {
+                $folder .= $subF . DS;
+            }
+        }
+    } else {
+        $folder = $itemType . 's' . DS;
+        if ($itemType[strlen($itemType) - 1] == 'y') $folder = substr($itemType, 0, strlen($itemType) - 1) . 'ies' . DS;
+    }
+    $namespace = '';
+    if ($folder) {
+        $namespace = str_replace('/', '\\', $folder);
+        if ($namespace[strlen($namespace) - 1] == '\\') $namespace = substr($namespace, 0, strlen($namespace) - 1);
+        $namespace = "namespace $namespace;";
+    }
     $txt =
         "<?php
 
-namespace $folder;
+$namespace
 
 use _core\PSC;
 
@@ -99,10 +116,10 @@ class $itemName extends PSC
     ";
 
     if (!file_exists(SOURCEPATH . $folder)) newFolder(SOURCEPATH . $folder);
-    if (file_exists(SOURCEPATH . $folder . DS . "$itemName.php"))
+    if (file_exists(SOURCEPATH . $folder . "$itemName.php"))
         printl("$itemType '$itemName' already exists!", 'red', true);
 
-    newFile(SOURCEPATH . $folder . DS . "$itemName.php", $txt);
+    newFile(SOURCEPATH . $folder . "$itemName.php", $txt);
 
     printl("Success!", 'black', false, 'green');
 }
