@@ -27,6 +27,8 @@ class DB
         if ($this->link->connect_errno) {
             $msg = "Failed to connect to MySQL: " . $this->link->connect_error;
             trigger_error($msg, E_USER_ERROR);
+        }else{
+            $this->link->set_charset(DB_CHARSET);
         }
     }
 
